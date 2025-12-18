@@ -21,6 +21,13 @@ public class PlayerController2D : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W)) jumpQueued = true;
     }
 
+    void OnDrawGizmosSelected()
+    {
+        if (!groundCheck) return;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
+    }
+
     void FixedUpdate()
     {
         float x = 0f;

@@ -8,54 +8,73 @@ public class LobbyShopUI : MonoBehaviour
 
     public int ammoPackAmount = 10;
     public int ammoPackCost = 5;
-
     public int healCost = 8;
 
-    public string nextLevelScene = "Level1"; // change to Level2 later
+    public string nextLevelScene = "Level1";
 
     private PlayerHealth playerHealth;
     private PlayerCombat playerCombat;
 
-    void Start()
+    void OnEnable()
     {
-        // In lobby you may show a “dummy player” for preview, or spawn a player.
-        // Simplest: have a player object in lobby.
-        playerHealth = FindObjectOfType<PlayerHealth>();
-        playerCombat = FindObjectOfType<PlayerCombat>();
+        RefreshUI();
     }
 
-    void Update()
+    void Start()
     {
-        if (goldText) goldText.text = $"GOLD: {GameSession.Instance.gold}";
+        // Optional: only if you actually have a player IN the lobby.
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        playerCombat = FindObjectOfType<PlayerCombat>();
+
+        RefreshUI();
+    }
+
+    void RefreshUI()
+    {
+        if (goldText && GameSession.Instance != null)
+            goldText.text = GameSession.Instance.gold.ToString();
     }
 
     public void ClaimStarterPistol()
     {
+        if (GameSession.Instance == null) return;
+
         GameSession.Instance.ownedWeapons.Add(WeaponId.Pistol);
+
+        // Only runs if you have a lobby player
         if (playerCombat != null) playerCombat.SetOwned(WeaponId.Pistol, true);
+
+        RefreshUI();
     }
 
     public void BuyAmmoForCurrentWeapon()
     {
+        if (GameSession.Instance == null) return;
         if (playerCombat == null) return;
 
         if (GameSession.Instance.gold < ammoPackCost) return;
-        var current = playerCombat.weapons[playerCombat.currentWeaponIndex];
 
+        var current = playerCombat.weapons[playerCombat.currentWeaponIndex];
         if (current.data.infiniteAmmo) return;
 
         GameSession.Instance.gold -= ammoPackCost;
         playerCombat.AddAmmo(current.data.id, ammoPackAmount);
+
+        RefreshUI();
     }
 
     public void HealOne()
     {
+        if (GameSession.Instance == null) return;
         if (playerHealth == null) return;
+
         if (playerHealth.hp >= playerHealth.maxHP) return;
         if (GameSession.Instance.gold < healCost) return;
 
         GameSession.Instance.gold -= healCost;
         playerHealth.Heal(1);
+
+        RefreshUI();
     }
 
     public void GoToNextLevel()
