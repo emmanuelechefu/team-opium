@@ -55,4 +55,8 @@ then add that file to the Inventory inside of player
 I think that's all, if anything else is cooked LOL GL I believe in you, DMS was made to prepare you for these moments
 
 ## Denis
-Tried to add the two weapon loadout thing to the lobby with drop downs so you can test it now, but there are only two weapons anyways so we need to add more before we can even see if it works lmao. Also, it only populates the drop down when you enter the lobby so if you buy something it won't show until next time you go to the lobby, can prob fix that easy. (if you own the pistol i dont think the game lets you NOT equip it atm, idk if thats because there are only 2 weapons and it tries not to equip duplicates or?? Good luck bruh)
+Tried to add the two weapon loadout thing to the lobby with drop downs so you can test it now, but there are only two weapons anyways so we need to add more before we can even see if it works lmao. Also, it only populates the drop down when you enter the lobby so if you buy something it won't show until next time you go to the lobby, can prob fix that easy by just running a check every time something is bought. If you own the pistol i dont think the game lets you NOT equip it atm, idk if thats because there are only 2 weapons and it tries not to equip duplicates or what?? Good luck bruh.
+
+Also added muzzle flash and weapon flash (flashes a png of the gun when you shoot it) and offsets for both which should be pretty easy to use.
+
+Icl the lobby loadout thing uses playerCombat so unless you refactor you cant delete that now, mb :D. AI can prob change that in one go though.

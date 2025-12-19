@@ -5,6 +5,7 @@ public class PlayerCombatInventory : MonoBehaviour
 {
     public Transform firePoint;
     public Camera mainCam;
+    public WeaponVisuals weaponVisuals;
 
     private Inventory inv;
     private float nextFireTime;
@@ -40,14 +41,19 @@ public class PlayerCombatInventory : MonoBehaviour
     {
         var w = inv.Current;
         if (Time.time < nextFireTime) return;
-
         if (!w.data.infiniteAmmo && w.ammo <= 0) return;
 
         Vector3 mouseWorld = mainCam.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorld - firePoint.position);
         dir.Normalize();
 
-        var p = Instantiate(w.data.projectilePrefab, firePoint.position, Quaternion.identity);
+        if (weaponVisuals != null)
+        {
+            weaponVisuals.TriggerFlash(w.data, dir);
+        }
+
+        // Projectile uses firePoint rotation to match the visual direction
+        var p = Instantiate(w.data.projectilePrefab, firePoint.position, firePoint.rotation);
         p.Init(dir, w.data.projectileSpeed, w.data.damage, w.data.projectilePassesThroughWalls, ownerTag: "Player");
 
         nextFireTime = Time.time + w.data.fireCooldown;

@@ -8,6 +8,16 @@ public class WeaponData : ScriptableObject
     public WeaponId id;
     public string displayName;
 
+    [Header("Visuals - Weapon Flash")]
+    public Sprite weaponFlashSprite;    
+    public float weaponFlashScale = 1f;
+    public float weaponFlashOffset = 0.3f;
+
+    [Header("Visuals - Muzzle Flash")]
+    public bool enableMuzzleFlash;      
+    public float muzzleFlashScale = 1f;
+    public float muzzleFlashOffset = 1.0f;
+
     [Header("Combat")]
     public Projectile projectilePrefab;
     public float fireCooldown = 0.25f;
