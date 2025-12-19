@@ -53,3 +53,6 @@ For each new weapon if you want to add any you need to add a weapon data file of
 then add that file to the Inventory inside of player
 
 I think that's all, if anything else is cooked LOL GL I believe in you, DMS was made to prepare you for these moments
+
+## Denis
+Tried to add the two weapon loadout thing to the lobby with drop downs so you can test it now, but there are only two weapons anyways so we need to add more before we can even see if it works lmao. (if you own the pistol i dont think the game lets you NOT equip it atm, idk if thats because there are only 2 weapons and it tries not to equip duplicates or?? Good luck bruh)

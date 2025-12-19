@@ -7,4 +7,8 @@ public class LobbyManager : MonoBehaviour
     {
         SceneManager.LoadScene("Level1");
     }
+    public void LoadLevel2()
+    {
+        SceneManager.LoadScene("Level2");
+    }
 }

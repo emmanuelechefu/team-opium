@@ -9,6 +9,9 @@ public class GameSession : MonoBehaviour
 
     // Persist weapon ownership
     public HashSet<WeaponId> ownedWeapons = new HashSet<WeaponId> { WeaponId.Rocks };
+    // Set equipped weapons
+    public WeaponId equippedSlot1 = WeaponId.Rocks;
+    public WeaponId equippedSlot2 = WeaponId.Rocks;
 
     // Optional: persist HP between Lobby and Levels (enable if you want)
     public int persistedHP = 3;

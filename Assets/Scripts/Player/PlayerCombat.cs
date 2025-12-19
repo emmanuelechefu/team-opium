@@ -19,21 +19,66 @@ public class PlayerCombat : MonoBehaviour
 
     void Start()
     {
-        // Build instances
         weapons.Clear();
-        foreach (var wd in startingWeaponDatas)
+
+        // 1. Identify which weapons were equipped in the lobby
+        WeaponId slot1 = (GameSession.Instance != null) ? GameSession.Instance.equippedSlot1 : WeaponId.Rocks;
+        WeaponId slot2 = (GameSession.Instance != null) ? GameSession.Instance.equippedSlot2 : WeaponId.Rocks;
+
+        // 2. Add Slot 1
+        AddWeaponByInstance(slot1);
+
+        // 3. Add Slot 2 (only if it's different to avoid duplicates in the runtime list)
+        if (slot1 != slot2)
         {
-            var wi = new WeaponInstance { data = wd, owned = (wd.id == WeaponId.Rocks) };
-            wi.Init();
-
-            // Pistol starter is free and owned in lobby, but you can mark it owned here if you want for testing:
-            // if (wd.id == WeaponId.Pistol) wi.owned = true;
-
-            weapons.Add(wi);
+            AddWeaponByInstance(slot2);
         }
 
-        // Ensure current is Rocks initially
-        currentWeaponIndex = FindWeaponIndex(WeaponId.Rocks);
+        currentWeaponIndex = 0;
+    }
+
+    private void AddWeaponByInstance(WeaponId id)
+    {
+        // Safety check: Only equip if the player actually owns it in the GameSession
+        if (GameSession.Instance != null && !GameSession.Instance.ownedWeapons.Contains(id))
+        {
+            Debug.LogWarning($"Player tried to equip {id} but doesn't own it! Defaulting to Rocks.");
+            id = WeaponId.Rocks; 
+        }
+
+        foreach (var wd in startingWeaponDatas)
+        {
+            if (wd != null && wd.id == id)
+            {
+                // Ensure we don't instantiate a null prefab
+                if (wd.projectilePrefab == null)
+                {
+                    Debug.LogError($"Weapon {id} is missing its Projectile Prefab!");
+                    return;
+                }
+
+                var wi = new WeaponInstance { data = wd, owned = true };
+                wi.Init();
+                weapons.Add(wi);
+                return;
+            }
+        }
+    }
+
+    // Helper method to find the correct Data asset and create a Runtime instance
+    private void AddWeaponToRuntimeList(WeaponId id)
+    {
+        foreach (var wd in startingWeaponDatas)
+        {
+            if (wd.id == id)
+            {
+                var wi = new WeaponInstance { data = wd, owned = true };
+                wi.Init();
+                weapons.Add(wi);
+                return;
+            }
+        }
+        Debug.LogError($"WeaponData for {id} not found in PlayerCombat's startingWeaponDatas list!");
     }
 
     void Update()

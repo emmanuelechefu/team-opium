@@ -5,7 +5,7 @@ using TMPro;
 public class LobbyShopUI : MonoBehaviour
 {
     public TMP_Text goldText;
-
+    public int pistolCost = 3;
     public int ammoPackAmount = 10;
     public int ammoPackCost = 5;
     public int healCost = 8;
@@ -14,6 +14,26 @@ public class LobbyShopUI : MonoBehaviour
 
     private PlayerHealth playerHealth;
     private PlayerCombat playerCombat;
+
+    // 1. Add this reference at the top of LobbyShopUI.cs
+    public LoadoutManager loadoutManager; 
+
+    public void BuyPistol()
+    {
+        if (GameSession.Instance == null) return;
+        if (GameSession.Instance.ownedWeapons.Contains(WeaponId.Pistol)) return;
+
+        if (GameSession.Instance.gold >= pistolCost)
+        {
+            GameSession.Instance.gold -= pistolCost;
+            GameSession.Instance.ownedWeapons.Add(WeaponId.Pistol);
+
+            // 2. Add this line: This forces the dropdowns to update immediately
+            if (loadoutManager != null) loadoutManager.RefreshDropdowns();
+
+            RefreshUI();
+        }
+    }
 
     void OnEnable()
     {
@@ -34,6 +54,7 @@ public class LobbyShopUI : MonoBehaviour
         if (goldText && GameSession.Instance != null)
             goldText.text = GameSession.Instance.gold.ToString();
     }
+
 
     public void ClaimStarterPistol()
     {
@@ -81,4 +102,6 @@ public class LobbyShopUI : MonoBehaviour
     {
         SceneManager.LoadScene(nextLevelScene);
     }
+
+
 }
