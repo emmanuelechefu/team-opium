@@ -8,6 +8,8 @@ public class WeaponData : ScriptableObject
     public WeaponId id;
     public string displayName;
 
+    public Sprite weaponIcon; // Drag your 'Pistol' or 'Rock' png here in the Inspector
+    
     [Header("Visuals - Weapon Flash")]
     public Sprite weaponFlashSprite;    
     public float weaponFlashScale = 1f;
@@ -22,7 +24,7 @@ public class WeaponData : ScriptableObject
     public Projectile projectilePrefab;
     public float fireCooldown = 0.25f;
     public int damage = 1;
-    public float projectileSpeed = 14f;
+    public float projectileSpeed = 12f;
 
     [Header("Ammo")]
     public bool infiniteAmmo = false;

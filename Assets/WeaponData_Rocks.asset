@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   id: 0
   displayName: Rocks
+  weaponIcon: {fileID: -2182124076254010665, guid: ced7abd952d70584aa1836dc0fa3d165, type: 3}
   weaponFlashSprite: {fileID: 0}
   weaponFlashScale: 1
   weaponFlashOffset: 0.3
-  enableMuzzleFlash: 0
+  enableMuzzleFlash: 1
   muzzleFlashScale: 10
   muzzleFlashOffset: 1
   projectilePrefab: {fileID: -2709887222624595456, guid: 85c8254b884bd064e88f4de162e91112, type: 3}

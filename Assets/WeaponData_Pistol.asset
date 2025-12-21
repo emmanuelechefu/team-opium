@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   id: 1
   displayName: Pistol
-  weaponFlashSprite: {fileID: -4854829337826818713, guid: bf432b843abf18a4bba630aecfc7a44e, type: 3}
+  weaponIcon: {fileID: -4854829337826818713, guid: bf432b843abf18a4bba630aecfc7a44e, type: 3}
+  weaponFlashSprite: {fileID: 5990233513488440095, guid: fd26a74d4b2ae4146b5d2469dca59273, type: 3}
   weaponFlashScale: 5
   weaponFlashOffset: 10
   enableMuzzleFlash: 1

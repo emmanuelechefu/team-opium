@@ -21,16 +21,25 @@ public class LobbyShopUI : MonoBehaviour
     public void BuyPistol()
     {
         if (GameSession.Instance == null) return;
+        
+        // Check if we already own it to prevent double-buying
         if (GameSession.Instance.ownedWeapons.Contains(WeaponId.Pistol)) return;
 
         if (GameSession.Instance.gold >= pistolCost)
         {
+            // 1. Spend the gold
             GameSession.Instance.gold -= pistolCost;
+            
+            // 2. Add to the persistent "Owned" list
             GameSession.Instance.ownedWeapons.Add(WeaponId.Pistol);
 
-            // 2. Add this line: This forces the dropdowns to update immediately
-            if (loadoutManager != null) loadoutManager.RefreshDropdowns();
+            // 3. TELL THE LOADOUT MANAGER TO UPDATE THE DROPDOWNS
+            if (loadoutManager != null) 
+            {
+                loadoutManager.RefreshDropdowns();
+            }
 
+            // 4. Update the Gold Text display
             RefreshUI();
         }
     }
